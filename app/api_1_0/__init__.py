@@ -1,4 +1,5 @@
 from flask import Blueprint, request, g
+from app.logic.user_management import UserManagment
 
 api = Blueprint('api', __name__)
 
@@ -12,7 +13,7 @@ def before_api_request():
     token = request.json.get('token')
     if not token:
         return errors.unauthorized('Authentication token not provided.')
-    user = User.validate_api_token(token)
+    user = UserManagment.validate_auth_token(token)
     if not user:
         return errors.unauthorized('Invalid authentication token.')
     g.current_user = user

@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import request, current_app
+from flask import current_app
 
 class UserManagment():
     @staticmethod

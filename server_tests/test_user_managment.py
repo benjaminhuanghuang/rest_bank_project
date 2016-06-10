@@ -19,3 +19,5 @@ class UserManagement_TestCase(unittest.TestCase):
         user = UserManagment.get_user_by_name(user_name)
 
         self.assertIsNotNone(user)
+
+

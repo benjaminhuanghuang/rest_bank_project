@@ -1,9 +1,10 @@
 from flask import render_template, current_app, request, redirect, url_for, \
     flash
-from flask.ext.login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required
 from . import auth
 from .forms import LoginForm
 
+from app.logic.user_management import  UserManagment
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -13,7 +14,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = UserManagment.get_user_by_name(form.user_name.data)
         if user is None or not user.verify_password(form.password.data):
             flash('Invalid email or password.')
             return redirect(url_for('.login'))

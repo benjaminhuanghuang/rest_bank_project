@@ -1,8 +1,13 @@
 from flask import Flask
-from flask.ext.login import LoginManager
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
+
+from flask_login import LoginManager
 from config import config
 from db.mongo_connection import MongoConnection
 
+bootstrap = Bootstrap()
+moment = Moment()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -52,6 +57,9 @@ def create_app(config_name):
         app.logger.addHandler(syslog_handler)
 
     login_manager.init_app(app)
+    bootstrap.init_app(app)
+    moment.init_app(app)
+
     app.db = MongoConnection.init_db(app)
 
     # register blue prints for routers
@@ -60,5 +68,8 @@ def create_app(config_name):
 
     from .api_1_0 import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api/1.0')
+
+    from .statements import statements as statements_blueprint
+    app.register_blueprint(statements_blueprint)
 
     return app

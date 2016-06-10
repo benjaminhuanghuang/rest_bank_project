@@ -1,11 +1,11 @@
 # Flask
-flask>=0.10.1
+flask>=0.11.1
 flask-restful==0.3.0
 Flask-HTTPAuth==2.2.0
 flask-bcrypt==0.6.0
 
 # Flask Extensions
-WTForms
+WTForms>=2.1
 Flask-Assets==0.10
 Flask-Cache==0.13.1
 Flask-DebugToolbar==0.9.0
@@ -13,8 +13,9 @@ Flask-Login==0.2.11
 Flask-Script==2.0.5
 Flask-WTF==0.10.0
 Werkzeug>=0.7
+Flask-Bootstrap>=3.3.6.0
 Jinja2>=2.4
-
+Flask-Moment > 0.5.1
 
 # Database
-pymongo>=2.8
+pymongo>=3.2.2

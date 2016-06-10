@@ -1,14 +1,6 @@
-import os
-
-if os.path.exists('.env'):
-    print('Importing environment from .env...')
-    for line in open('.env'):
-        var = line.strip().split('=')
-        if len(var) == 2:
-            os.environ[var[0]] = var[1]
-
 from app import create_app
-from flask.ext.script import Manager
+from app.logic.user_management import UserManagment
+from flask_script import Manager
 
 app = create_app('default')
 manager = Manager(app)
@@ -23,7 +15,7 @@ def test():
 
 
 @manager.command
-def adduser(email, username, admin=False):
+def adduser(user_name, email):
     """Register a new user."""
     from getpass import getpass
     password = getpass()
@@ -31,10 +23,10 @@ def adduser(email, username, admin=False):
     if password != password2:
         import sys
         sys.exit('Error: passwords do not match.')
+    UserManagment.create_user(user_name, password, email, 2)
 
 
-
-    print('User {0} was registered successfully.'.format(username))
+    print('User {0} was created successfully.'.format(user_name))
 
 
 if __name__ == '__main__':
