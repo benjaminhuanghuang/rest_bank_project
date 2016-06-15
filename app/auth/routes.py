@@ -5,7 +5,6 @@ from . import auth
 from .forms import LoginForm
 import bcrypt
 
-from app.logic.user_management import UserManagment
 from app import mongo
 from app.models.user import User
 
@@ -35,12 +34,15 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = UserManagment.get_user_by_name(form.user_name.data)
-        if user is None or not UserManagment.verify_password(user, form.password.data):
-            flash('Invalid user name or password.')
-            return redirect(url_for('.login'))
-        login_user(User(user), form.remember_me.data, False)
-        return redirect(request.args.get('next') or url_for('talks.index'))
+        user = User.get_user_by_name(form.user_name.data)
+        if user and User.verify_password(user, form.password.data):
+            user_obj = User(user)
+            login_user(user_obj)
+
+            # flash("Logged in successfully", category='success')
+            return redirect(request.args.get('next') or url_for('statements.index'))
+        else:
+            flash('Invalid user name or password.', category='error')
     return render_template('auth/login.html', form=form)
 
 
@@ -62,4 +64,4 @@ def login2():
 def logout():
     logout_user()
     flash('You have been logged out.')
-    return redirect(url_for('talks.index'))
+    return redirect(url_for('home.index'))

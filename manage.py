@@ -1,5 +1,5 @@
 from app import create_app
-from app.logic.user_management import UserManagment
+from app.models.user import User
 from flask_script import Manager, Server
 
 app = create_app('default')
@@ -28,14 +28,14 @@ def adduser(user_name, email, role=2):
     if password != password2:
         import sys
         sys.exit('Error: passwords do not match.')
-    UserManagment.create_user(user_name, password, email, role)
+    User.create_user(user_name, password, email, role)
 
     print('User {0} was created successfully.'.format(user_name))
 
 
 @manager.command
 def hash_password(password):
-    print UserManagment.hash_password(password)
+    print User.hash_password(password)
 
 
 if __name__ == '__main__':
