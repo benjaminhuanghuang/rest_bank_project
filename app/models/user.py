@@ -26,7 +26,6 @@ class User():
     def is_anonymous(self):
         return False
 
-    @property
     def get_id(self):
         return unicode(self.user_data["_id"])
 
