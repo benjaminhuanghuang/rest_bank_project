@@ -1,9 +1,11 @@
 from app import create_app
 from app.logic.user_management import UserManagment
-from flask_script import Manager
+from flask_script import Manager, Server
 
 app = create_app('default')
 manager = Manager(app)
+server = Server(port=9527)
+manager.add_command("run", server)
 
 
 @manager.command
@@ -15,20 +17,26 @@ def test():
 
 
 @manager.command
-def adduser(user_name, email):
-    """Register a new user."""
+def adduser(user_name, email, role=2):
+    """
+        Register a new user.
+        python manage.py adduser ben ben@gmail -r0
+    """
     from getpass import getpass
     password = getpass()
     password2 = getpass(prompt='Confirm: ')
     if password != password2:
         import sys
         sys.exit('Error: passwords do not match.')
-    UserManagment.create_user(user_name, password, email, 2)
-
+    UserManagment.create_user(user_name, password, email, role)
 
     print('User {0} was created successfully.'.format(user_name))
 
 
+@manager.command
+def hash_password(password):
+    print UserManagment.hash_password(password)
+
+
 if __name__ == '__main__':
     manager.run()
-

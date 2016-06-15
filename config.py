@@ -3,7 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
-    SECRET_KEY = "a*a*math"
+    # used for session
+    SECRET_KEY = "*9527*"
 
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -14,12 +15,13 @@ class Config:
     MAIL_FLUSH_INTERVAL = 3600  # one hour
     MAIL_ERROR_RECIPIENT = "benjaminhuanghuang@gmail.com,huang.huang@afficienta.com"
 
-    DB_SEVER_URI = "localhost"
-    DB_SEVER_PORT = 27017
-
-    DATABASE = "rest_bank"
-    DB_USER = "admin"
-    DB_PASSWORD = "abc123"
+    # PyMongo understands the following configuration directives
+    MONGO_HOST = "localhost"
+    MONGO_PORT = 27017
+    MONGO_DBNAME = "rest_bank"
+    MONGO_USERNAME = "admin"
+    MONGO_PASSWORD = "abc123"
+    # MONGO_URI = "mongodb://admin:abc123/localhost:27017/rest_bank"
 
 
 class DevelopmentConfig(Config):

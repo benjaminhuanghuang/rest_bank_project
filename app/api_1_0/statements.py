@@ -28,3 +28,10 @@ def withdraw():
     if not g.current_user.role > 0:
         return forbidden('You cannot use this API.')
     return jsonify({'status': 'ok'})
+
+
+@api.route('/admin/listuser', methods=['POST'])
+def list_user():
+    if not g.current_user.role > 0:
+        return forbidden('You cannot use this API.')
+    return jsonify({'status': 'ok'})

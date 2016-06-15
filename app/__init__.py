@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_pymongo import PyMongo
 
 from flask_login import LoginManager
 from config import config
-from db.mongo_connection import MongoConnection
 
 bootstrap = Bootstrap()
 moment = Moment()
+mongo = PyMongo()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -21,7 +22,8 @@ def create_app(config_name):
         config_name: the python path of the config object in config.py,
     """
     app = Flask(__name__)
-    app.config.from_object(config[config_name])
+    config_obj = config[config_name]
+    app.config.from_object(config_obj)
 
     if not app.config['DEBUG'] and not app.config['TESTING']:
         # configure logging for production
@@ -56,13 +58,15 @@ def create_app(config_name):
         syslog_handler.setLevel(logging.WARNING)
         app.logger.addHandler(syslog_handler)
 
+    mongo.init_app(app)
     login_manager.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)
 
-    app.db = MongoConnection.init_db(app)
-
     # register blue prints for routers
+    from .home import home as home_blueprint
+    app.register_blueprint(home_blueprint)
+
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
@@ -70,6 +74,6 @@ def create_app(config_name):
     app.register_blueprint(api_blueprint, url_prefix='/api/1.0')
 
     from .statements import statements as statements_blueprint
-    app.register_blueprint(statements_blueprint)
+    app.register_blueprint(statements_blueprint, url_prefix='/statements')
 
     return app

@@ -3,7 +3,7 @@
 {% block title %}REST Bank{% endblock %}
 
 {% block head %}
-    {{ super() }}
+    {{ super() }} {# render the contents  defined in the parent templat bootstrap/base.html #}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
@@ -19,12 +19,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('statements.index') }}">Statements</a>
+                <a class="navbar-brand" href="{{ url_for('home.index') }}">REST Bank Demo</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('statements.index') }}">Home</a></li>
-
+                    <li><a href="{{ url_for('statements.index') }}">Statements</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if not current_user.is_authenticated() %}
@@ -43,12 +42,15 @@
                 {{ message }}
             </div>
         {% endfor %}
-
-        {% block page_content %}{% endblock %}
+        {% block page_content %}
+        {% endblock %}
     </div>
+{% endblock %}
+{% block footer %}
+
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
+    {{ super() }} {# include the js defined in the parent templat bootstrap/base.html#}
+    {{ moment.include_moment() }} {# include the js defined moment #}
 {% endblock %}

@@ -2,6 +2,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
+from app import mongo
+
 class UserManagment():
     @staticmethod
     def validate_auth_token(token):
@@ -16,51 +18,49 @@ class UserManagment():
         return None
 
     @staticmethod
-    def verify_password(user_id, password):
-        user = UserManagment.get_user_by_id(user_id)
-        password_hash = user["password"]
-        return check_password_hash(password_hash, password)
-
-    @staticmethod
     def hash_password(password):
-        return generate_password_hash(password)
-
-    @staticmethod
-    def hash_password(self, password):
         return generate_password_hash(password)
 
     @staticmethod
     def get_user_by_id(user_id):
         query = {"user_id": user_id}
-        projection = {"_id": -1}
-        user = current_app.db.find_one(query, projection)
-
+        # projection = {"_id": -1}
+        # user = mongo.db["users"].find_one(query, projection)
+        user = mongo.db["users"].find_one(query)
         return user
 
     @staticmethod
     def get_user_by_name(user_name):
-        query = {"user_name": user_name}
-        projection = {"_id": -1}
-        user = current_app.db["users"].find_one(query, projection)
-
+        query = {"name": user_name}
+        # projection = {"_id": 0}
+        # user = mongo.db["users"].find_one(query, projection)
+        user = mongo.db["users"].find_one(query)
         return user
 
     @staticmethod
     def is_user_name_existed(user_name):
-        query = {"user_name": user_name}
-        count = current_app.db["users"].find(query).count()
+        query = {"name": user_name}
+        count = mongo.db["users"].find(query).count()
 
         return count > 0
 
     @staticmethod
-    def create_user(user_name, password, email, role):
+    def create_user(user_name, password, email, role=2):
         if UserManagment.is_user_name_existed(user_name):
             raise ValueError("User name {0} existed.".format(user_name))
 
+        hass_pass = generate_password_hash(password)
+
         user = {
-            "user_name": user_name,
-            "password": password,
+            "name": user_name,
+            "password": hass_pass,
             "email": email,
             "role": role
         }
-        current_app.db["users"].insert(user)
+
+        mongo.db.users.insert(user)
+
+    @staticmethod
+    def verify_password(user, password):
+        hash_pass = user["password"]
+        return check_password_hash(hash_pass, password)

@@ -4,8 +4,7 @@ from flask_login import login_required, current_user
 
 from . import statements
 
-@statements.route('/')
+@statements.route('/index/')
 @login_required
 def index():
-
-    return render_template('statements/list.html')
+    return render_template('statements/index.html')

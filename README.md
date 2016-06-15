@@ -54,3 +54,11 @@ For Windows users working on the standard command prompt:
     
 Check library version installed:
     (venv) $ pip list
+    
+**Step 4**: Setup Mongo DB
+    # Create user for database rest_bank
+    use rest_bank   
+    db.createUser({user: "admin",pwd:"abc123",roles: [ { role: "dbOwner", db: "rest_bank" } ]})
+    
+    # install Flask-PyMongo
+    

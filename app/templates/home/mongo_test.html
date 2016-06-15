@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <h2>Mongo test page</h2>
+    {%- for user in uses %}
+          <p>{{user}}</p>
+    {%- endfor %}
+{% endblock %}
