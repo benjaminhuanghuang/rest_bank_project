@@ -1,6 +1,12 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}REST Bank{% endblock %}
+{% block title %}
+    {% if title %}
+        REST Bank - {{ title }}
+    {% else %}
+        REST Bank
+    {% endif %}
+{% endblock %}
 
 {% block head %}
     {{ super() }} {# render the contents  defined in the parent templat bootstrap/base.html #}
@@ -75,11 +81,14 @@
         {% block page_content %}
         {% endblock %}
     </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">&copy; Copyright 2010 by <a href="https://aloneplayer.wordpress.com/">BenjaminHuang</a>.</p>
+        </div>
+    </footer>
 {% endblock %}
 
-{% block footer %}
-    <div>By Benjaminhuanghuang@gmail.com</div>
-{% endblock %}
+
 
 {% block scripts %}
     {{ super() }} {# include the js defined in the parent templat bootstrap/base.html#}

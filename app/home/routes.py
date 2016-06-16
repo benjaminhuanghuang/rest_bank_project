@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, login_required
 from . import home
 from .forms import LoginForm
 from app.models.user import User
+from app import mongo
 
 
 @home.route('/static/favicon.ico')
@@ -25,7 +26,7 @@ def index():
             return redirect(request.args.get('next') or url_for('statements.index'))
         else:
             flash('Invalid user name or password.', category='error')
-    return render_template('home/index.html', form=form)
+    return render_template('home/index.html', form=form, title="Home")
 
 
 @home.route('/mongotest')

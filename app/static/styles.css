@@ -1,3 +1,17 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+    text-align: center
+}
+
 .user-profile {
     min-height: 140px;
 }
@@ -82,16 +96,14 @@ li.comment {
     padding: 10px;
 }
 
-ul.comment-list li.comment:nth-child(odd)
-{
+ul.comment-list li.comment:nth-child(odd) {
     background-color: #eee;
 }
 
-ul.comment-list li.comment:nth-child(even)
-{
+ul.comment-list li.comment:nth-child(even) {
     background-color: #fff;
 }
 
 .badge-red {
-    background-color:#d44;
+    background-color: #d44;
 }
