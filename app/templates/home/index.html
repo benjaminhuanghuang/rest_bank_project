@@ -2,9 +2,21 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block page_content %}
-    <h2>This is home page 1.</h2>
-    <div class="page-header">
-        <h1>Login</h1>
+
+    <div layout="row">
+        <div class="col-md-8">
+            <img src="static/image/home.png" width="700" height="467"/>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login</h3>
+                </div>
+                <div class="panel-body" ng-controller="LoginController">
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
     </div>
-    {{ wtf.quick_form(form) }}
 {% endblock %}
+
