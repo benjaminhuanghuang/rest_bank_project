@@ -32,6 +32,10 @@ class User():
     def is_admin(self):
         return self.user_data["role"] < 1
 
+    @property
+    def username(self):
+        return self.user_data["name"]
+
     @staticmethod
     def validate_login(password_hash, password):
         return check_password_hash(password_hash, password)
