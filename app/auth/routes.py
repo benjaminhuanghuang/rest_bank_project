@@ -2,7 +2,7 @@ from flask import render_template, current_app, request, redirect, url_for, \
     flash, session
 from flask_login import login_user, logout_user, login_required
 from . import auth
-from .forms import LoginForm
+
 import bcrypt
 
 from app import mongo
@@ -25,7 +25,6 @@ def register():
         return "The username already exists!"
     return render_template('register.html')
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if not current_app.config['DEBUG'] and not current_app.config['TESTING'] \
@@ -44,7 +43,6 @@ def login():
         else:
             flash('Invalid user name or password.', category='error')
     return render_template('auth/login.html', form=form)
-
 
 @auth.route('/login2', methods=['POST'])
 def login2():

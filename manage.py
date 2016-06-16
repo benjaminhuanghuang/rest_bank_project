@@ -2,11 +2,10 @@ from app import create_app
 from app.models.user import User
 from flask_script import Manager, Server
 
-app = create_app('default')
+app = create_app('production')
 manager = Manager(app)
 server = Server(port=9527)
 manager.add_command("run", server)
-
 
 @manager.command
 def test():

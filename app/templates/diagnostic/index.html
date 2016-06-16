@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+ <h2>This is Diagnostic page.</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset:4">
+                <form method=POST action="{{ url_for('diagnostic.makecrash') }}">
+                    <button type="submit" class="btn btn-primary btn-block">Make a crash</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

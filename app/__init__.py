@@ -11,7 +11,7 @@ moment = Moment()
 mongo = PyMongo()
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
+login_manager.login_view = '/'
 
 def create_app(config_name):
     """
@@ -75,5 +75,8 @@ def create_app(config_name):
 
     from .statements import statements as statements_blueprint
     app.register_blueprint(statements_blueprint, url_prefix='/statements')
+
+    from .diagnostic import diagnostic as diagnostic_blueprint
+    app.register_blueprint(diagnostic_blueprint, url_prefix='/diagnostic')
 
     return app
